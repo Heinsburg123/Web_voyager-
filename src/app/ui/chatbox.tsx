@@ -34,8 +34,8 @@ export default function ChatBox() {
                         className={clsx(
                             'bg-teal-100 my-4 rounded-lg p-4 text-sky-700',
                             {
-                                'text-left bg-transparent': message.sender === "bot",
-                                'text-right w-3/4 self-end': message.sender === "user"
+                                'text-left bg-transparent p-0': message.sender === "bot",
+                                'text-right w-auto self-end': message.sender === "user"
                             }
                         )}
                     >
