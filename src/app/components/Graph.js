@@ -33,19 +33,42 @@ export default function GraphView() {
     };
 
     const data = require("./data.json");
+    var rAdj = [], Level = [];
+
+    function dfs(u) {
+        if (Level[u] != -1) return;
+        for(var i = 0; i < rAdj[u].length; ++i) {
+            var v = rAdj[u][i]; 
+            dfs(v);
+            Level[u] = Math.max(Level[u], Level[v]); 
+        }
+        Level[u] ++;
+    }
 
     function createGraph() {
         var graph = {};
         graph.nodes = [];
         graph.edges = [];
+
         for(var i = 0; i < data.header.length; ++i) {
-            graph.nodes.push({id: i, label: data.header[i]}); 
+            rAdj[i] = []; 
+            Level[i] = -1; 
         }
-        
+
         for(var i = 0; i < data.adj.length; ++i) {
             for(var j = 0; j < data.adj[i].length; ++j) {
                 graph.edges.push({from: i, to: data.adj[i][j]}); 
+                rAdj[data.adj[i][j]].push(i); 
             }
+        }
+
+        Level[0] = 0; 
+        for(var i = 1; i < data.header.length; ++i) {
+            dfs(i);  
+        }
+
+        for(var i = 0; i < data.header.length; ++i) {
+            graph.nodes.push({id: i, label: data.header[i], level: Level[i]}); 
         }
         
         return graph;        
@@ -53,12 +76,13 @@ export default function GraphView() {
     //const data2 = createGraph();
     //console.log( data2 ); 
     graph = createGraph();
+    console.log(Level);
 
     const options = {
         layout: {
             hierarchical: {
                 direction: "LR",   // Left-to-right layout
-                nodeSpacing: 220,  // Adjust spacing between nodes
+                nodeSpacing: 300,  // Adjust spacing between nodes
                 levelSeparation: 150,  // Adjust separation between levels
             },
         },
