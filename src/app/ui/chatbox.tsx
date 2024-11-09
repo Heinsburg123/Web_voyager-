@@ -2,7 +2,7 @@
 
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid"
 import { useState } from "react";
-import { handleSendMessage } from "../lib/actions";
+import { handleSendMessage, fetchGraphData } from "../lib/actions";
 import clsx from "clsx";
 
 type Message = {

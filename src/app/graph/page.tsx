@@ -5,7 +5,7 @@ import GraphView from "../components/Graph";
 export default function Page(){
     return (
         <div>
-            <GraphView></GraphVie
+            <GraphView></GraphView>
         </div>
     )
 }
