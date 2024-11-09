@@ -11,5 +11,8 @@ export async function handleSendMessage(formData: FormData) {
 export async function fetchGraphData() {
     let data = await fetch("https://4556-128-119-202-179.ngrok-free.app/")
     let posts = await data.json()
+
+    console.log(posts)
+
     return posts
 }

@@ -1,9 +1,12 @@
+"use client"
+
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { fetchGraphData } from '../lib/actions';
 
 const Graph = dynamic(() => import('react-graph-vis'), { ssr: false });
 
-export default function GraphView() {
+export default function GraphView(graphData) {
     var graph = {
         nodes: [
             { id: 1, label: "node 1", level: 0 },  // Root node on the left
@@ -32,7 +35,7 @@ export default function GraphView() {
         ],
     };
 
-    const data = require("./data.json");
+    var data = graphData.graphData;
     var rAdj = [], Level = [];
 
     function dfs(u) {
