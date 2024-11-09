@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 const Graph = dynamic(() => import('react-graph-vis'), { ssr: false });
 
 export default function GraphView() {
-    const graph = {
+    var graph = {
         nodes: [
             { id: 1, label: "node 1", level: 0 },  // Root node on the left
             { id: 2, label: "node 2", level: 1 },
@@ -17,7 +17,6 @@ export default function GraphView() {
             { id: 9, label: "node 9", level: 6 },
             { id: 10, label: "node 10", level: 7 },
             { id: 11, label: "node 11", level: 8 },
-        
         ],
         edges: [
             { from: 1, to: 2 },
@@ -32,6 +31,28 @@ export default function GraphView() {
             { from: 10, to: 11 },
         ],
     };
+
+    const data = require("./data.json");
+
+    function createGraph() {
+        var graph = {};
+        graph.nodes = [];
+        graph.edges = [];
+        for(var i = 0; i < data.header.length; ++i) {
+            graph.nodes.push({id: i, label: data.header[i]}); 
+        }
+        
+        for(var i = 0; i < data.adj.length; ++i) {
+            for(var j = 0; j < data.adj[i].length; ++j) {
+                graph.edges.push({from: i, to: data.adj[i][j]}); 
+            }
+        }
+        
+        return graph;        
+    }
+    //const data2 = createGraph();
+    //console.log( data2 ); 
+    graph = createGraph();
 
     const options = {
         layout: {
