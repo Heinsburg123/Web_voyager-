@@ -2,11 +2,12 @@
 
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { fetchGraphData } from '../lib/actions';
+import { useState } from 'react';
+import clsx from 'clsx';
 
 const Graph = dynamic(() => import('react-graph-vis'), { ssr: false });
 
-export default function GraphView(graphData) {
+export default function GraphView({graphData}) {
     var graph = {
         nodes: [
             { id: 1, label: "node 1", level: 0 },  // Root node on the left
@@ -35,7 +36,7 @@ export default function GraphView(graphData) {
         ],
     };
 
-    var data = graphData.graphData;
+    var data = graphData;
     var rAdj = [], Level = [];
 
     function dfs(u) {
@@ -113,17 +114,30 @@ export default function GraphView(graphData) {
     const events = {
         select: ({ nodes }) => {
             //lam trong day
-            
+            setBoxState(() => "on")
         },
       };
 
+    const [boxState, setBoxState] = useState("off")
+
     return (
-        <div className = "h-screen">
+        <div className = "h-screen relative">
             <Graph
                 graph={graph}
                 options={options}
                 events = {events}
             />
+            <div 
+                className={clsx(
+                    'absolute top-0 right-0 h-screen bg-slate-900 w-1/4',
+                    {
+                        'hidden': boxState === "off",
+                        'block': boxState === "on"
+                    }
+                )}
+            >
+            
+            </div>
         </div>
     );
 }
