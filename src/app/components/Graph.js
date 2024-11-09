@@ -60,7 +60,7 @@ export default function GraphView(graphData) {
 
         for(var i = 0; i < data.adj.length; ++i) {
             for(var j = 0; j < data.adj[i].length; ++j) {
-                graph.edges.push({from: i, to: data.adj[i][j]}); 
+                graph.edges.push({from: i, to: data.adj[i][j], smooth: { type: 'curvedCW', roundness: 0.9 }}); 
                 rAdj[data.adj[i][j]].push(i); 
             }
         }
@@ -85,8 +85,8 @@ export default function GraphView(graphData) {
         layout: {
             hierarchical: {
                 direction: "LR",   // Left-to-right layout
-                nodeSpacing: 300,  // Adjust spacing between nodes
-                levelSeparation: 150,  // Adjust separation between levels
+                nodeSpacing: 220,  // Adjust spacing between nodes
+                levelSeparation: 120,  // Adjust separation between levels
             },
         },
         interaction: {
@@ -110,11 +110,19 @@ export default function GraphView(graphData) {
         },
     };
 
+    const events = {
+        select: ({ nodes }) => {
+            //lam trong day
+            
+        },
+      };
+
     return (
         <div className = "h-screen">
             <Graph
                 graph={graph}
                 options={options}
+                events = {events}
             />
         </div>
     );
