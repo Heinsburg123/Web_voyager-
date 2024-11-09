@@ -1,6 +1,7 @@
 import React from 'react';
-import Graph from 'react-graph-vis';
-import "../App.css"
+import dynamic from 'next/dynamic';
+
+const Graph = dynamic(() => import('react-graph-vis'), { ssr: false });
 
 export default function GraphView() {
     const graph = {
@@ -62,7 +63,7 @@ export default function GraphView() {
     };
 
     return (
-        <div className = "full-height">
+        <div className = "h-screen">
             <Graph
                 graph={graph}
                 options={options}
